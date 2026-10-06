@@ -29,7 +29,6 @@ When your changes create unused code:
 ## 4. Goal-Driven Execution
 **Define success criteria. Loop until verified.**
 - Define what "Done" and "Good" mean before beginning to code.
-- Strong success criteria lets you loop independently without constant clarification.
 - For multi-step tasks, state a brief plan in this form:
     1. \[Step\] -> Verify: \[check\]
     2. \[Step\] -> Verify: \[check\]
