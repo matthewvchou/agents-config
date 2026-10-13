@@ -6,46 +6,42 @@ Repo to track configuration files (*.md, skills, MCP, etc.) and personal prefere
 ```
 .claude/
   CLAUDE.md                              # general guidelines
+  install.sh                             # installer for macOS / Linux
+  install.ps1                            # installer for Windows
   rules/coding/CODE-STYLE.md             # code style rules
   rules/communication/COMMUNICATION-STYLE.md  # chat/response rules
 ```
 
 ## Install
 
-Copies `.claude/CLAUDE.md` and everything under `.claude/rules/` into your home
-`.claude` folder (`~/.claude` / `%USERPROFILE%\.claude`), making it apply to every project.
+Run the script for your operating system. Each script:
+
+1. Creates the home `.claude/rules` folder if it does not exist.
+2. Copies `.claude/CLAUDE.md` to `~/.claude/CLAUDE.md` (`%USERPROFILE%\.claude\CLAUDE.md` on Windows).
+3. Copies everything under `.claude/rules/` into `~/.claude/rules/`.
+4. Lists the installed files.
+
+This makes the rules apply to every project.
 
 **This overwrites `~/.claude/CLAUDE.md` and any same-named files under `~/.claude/rules/`.**
-Back those up first if you have your own.
+Back those up first if you have your own. Other files in `~/.claude` are not touched.
 
-Run the script from the root of this repo.
+The scripts locate the repo's `.claude` folder from their own path, so you can run them from any directory.
 
 ### Windows (PowerShell)
 
 ```powershell
-$dest = "$env:USERPROFILE\.claude"
-New-Item -ItemType Directory -Force -Path "$dest\rules" | Out-Null
-Copy-Item -Path ".claude\CLAUDE.md" -Destination $dest -Force
-Copy-Item -Path ".claude\rules\*" -Destination "$dest\rules" -Recurse -Force
+.\.claude\install.ps1
+```
+
+If execution policy blocks it:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .claude\install.ps1
 ```
 
 ### macOS / Linux (bash or zsh)
 
 ```bash
-dest="$HOME/.claude"
-mkdir -p "$dest/rules"
-cp .claude/CLAUDE.md "$dest/CLAUDE.md"
-cp -R .claude/rules/. "$dest/rules/"
-```
-
-### Verify
-
-```powershell
-# Windows
-Get-ChildItem -Recurse "$env:USERPROFILE\.claude\CLAUDE.md", "$env:USERPROFILE\.claude\rules"
-```
-
-```bash
-# macOS / Linux
-find "$HOME/.claude/CLAUDE.md" "$HOME/.claude/rules" -type f
+bash .claude/install.sh
 ```
