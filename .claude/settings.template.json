@@ -20,6 +20,7 @@
   },
   "disableClaudeAiConnectors": true,
   "disableBundledSkills": true,
+  "syncClaudeAiSkills": false,
   "disableRemoteControl": true,
   "disableWorkflows": true,
   "enableArtifact": false,
