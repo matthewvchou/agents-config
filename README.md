@@ -6,20 +6,16 @@ Repo to track configuration files (*.md, skills, MCP, etc.) and personal prefere
 ```
 .claude/
   CLAUDE.md                              # general guidelines
-  installMacLinux.ps1                    # installer for macOS / Linux (bash script)
+  installMacLinux.sh                     # installer for macOS / Linux (bash script)
   installWindows.ps1                     # installer for Windows
   rules/coding/CODE-STYLE.md             # code style rules
   rules/communication/COMMUNICATION-STYLE.md  # chat/response rules
-  skills/grill-me/, grilling/, handoff/  # skills
+  skills/                                # skills
 ```
 
 ## Skills
 
-| Skill | What it does |
-| --- | --- |
-| `grill-me` | Starts a grilling interview (calls `grilling`). |
-| `grilling` | Interviews you until your plan or decision is fully thought through. |
-| `handoff` | Summarizes the conversation so another agent can continue. |
+Some of [Matt Pocock's skills](https://github.com/mattpocock/skills) are installed.
 
 ## Install
 
@@ -53,5 +49,19 @@ powershell -ExecutionPolicy Bypass -File .claude\installWindows.ps1
 ### macOS / Linux (bash or zsh)
 
 ```bash
-bash .claude/installMacLinux.ps1
+bash .claude/installMacLinux.sh
 ```
+
+## Per-project setup
+
+The install is global, but the engineering skills (`to-tickets`, `triage`, `to-spec`, etc.) also need per-repo configuration.
+Run `/setup-matt-pocock-skills` once in **each project** before using them.
+
+It asks about and records, for that project:
+
+- Issue tracker (GitHub, GitLab, local markdown, or other).
+- Triage label vocabulary (only if `triage` is installed).
+- Domain doc layout (`GLOSSARY.md` and ADRs).
+
+It writes an `## Agent skills` block to the project's `CLAUDE.md` (or `AGENTS.md`) and config files under `docs/agents/`.
+Re-run it only to switch issue trackers or start over.
