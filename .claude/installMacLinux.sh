@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Script for Linux & MacOS
-# Copies CLAUDE.md, rules/, and skills/ from this repo's .claude into ~/.claude.
-# Overwrites ~/.claude/CLAUDE.md and same-named files under ~/.claude/rules/ and ~/.claude/skills/.
+# Copies CLAUDE.md, statusline.sh, rules/, and skills/ from this repo's .claude into ~/.claude.
+# Overwrites ~/.claude/CLAUDE.md, ~/.claude/statusline.sh, and same-named files under ~/.claude/rules/ and ~/.claude/skills/.
 # Creates ~/.claude/settings.json from settings.template.json, or merges the template into it (needs jq):
 # template scalars and enabledPlugins overwrite, permissions.deny is a union, other keys are kept.
 set -euo pipefail
@@ -12,6 +12,7 @@ dest="$HOME/.claude"
 
 mkdir -p "$dest/rules" "$dest/skills"
 cp "$src/CLAUDE.md" "$dest/CLAUDE.md"
+cp "$src/statusline.sh" "$dest/statusline.sh"
 cp -R "$src/rules/." "$dest/rules/"
 cp -R "$src/skills/." "$dest/skills/"
 
@@ -40,5 +41,5 @@ else
   fi
 fi
 
-find "$dest/CLAUDE.md" "$dest/rules" "$dest/skills" -type f
+find "$dest/CLAUDE.md" "$dest/statusline.sh" "$dest/rules" "$dest/skills" -type f
 [ -f "$settings" ] && echo "$settings"
