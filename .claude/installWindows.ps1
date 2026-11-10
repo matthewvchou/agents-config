@@ -1,6 +1,6 @@
 # Script for Windows PowerShell
-# Copies CLAUDE.md, rules\, and skills\ from this repo's .claude into %USERPROFILE%\.claude.
-# Overwrites %USERPROFILE%\.claude\CLAUDE.md and same-named files under rules\ and skills\.
+# Copies CLAUDE.md, statusline.sh, rules\, and skills\ from this repo's .claude into %USERPROFILE%\.claude.
+# Overwrites %USERPROFILE%\.claude\CLAUDE.md, statusline.sh, and same-named files under rules\ and skills\.
 # Creates %USERPROFILE%\.claude\settings.json from settings.template.json, or merges the template into it:
 # template scalars and enabledPlugins overwrite, permissions.deny is a union, other keys are kept.
 $ErrorActionPreference = "Stop"
@@ -11,6 +11,7 @@ $dest = Join-Path $env:USERPROFILE ".claude"
 
 New-Item -ItemType Directory -Force -Path "$dest\rules", "$dest\skills" | Out-Null
 Copy-Item -Path "$src\CLAUDE.md" -Destination $dest -Force
+Copy-Item -Path "$src\statusline.sh" -Destination $dest -Force
 Copy-Item -Path "$src\rules\*" -Destination "$dest\rules" -Recurse -Force
 Copy-Item -Path "$src\skills\*" -Destination "$dest\skills" -Recurse -Force
 
@@ -44,5 +45,5 @@ if (-not (Test-Path $settings)) {
     }
 }
 
-Get-ChildItem -Recurse -File "$dest\CLAUDE.md", "$dest\rules", "$dest\skills" | Select-Object -ExpandProperty FullName
+Get-ChildItem -Recurse -File "$dest\CLAUDE.md", "$dest\statusline.sh", "$dest\rules", "$dest\skills" | Select-Object -ExpandProperty FullName
 if (Test-Path $settings) { $settings }

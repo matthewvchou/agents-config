@@ -20,8 +20,13 @@
   },
   "disableClaudeAiConnectors": true,
   "disableBundledSkills": true,
+  "syncClaudeAiSkills": false,
   "disableRemoteControl": true,
   "disableWorkflows": true,
   "enableArtifact": false,
-  "enabledPlugins": {}
+  "enabledPlugins": {},
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh"
+  }
 }
