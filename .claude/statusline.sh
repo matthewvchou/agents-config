@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Claude Code statusline. Reads the session JSON from stdin and prints two lines:
 #   {Model} · {Effort} | {Folder} · {Branch} {✓ if nothing to commit, ✗ if not}
-#   [{bar}] {pct}% · {tokensUsed}/{contextWindow} | 5h · {pct}% (resets {time}) | 7d · {pct}% (resets {time})
+#   [{bar}] {pct}% · {tokensUsed}/{contextWindow} | 5h · {pct}% (↻ {time}) | 7d · {pct}% (↻ {time})
 # Needs only bash, grep, sed, date and git (no jq). Fields that are missing are dropped.
 
 # Set a color to an ANSI escape such as "\033[36m". Empty means no color.
@@ -190,8 +190,8 @@ buildContextPart() {
     "$(paint "$COLOR_TOKENS" "$(formatTokens "$used")/$(formatTokens "$windowSize")")"
 }
 
-# Prints "Label · pct% (resets time)", or nothing when the window is absent or already expired.
-# Without resets_at, only the "(resets ...)" part is dropped.
+# Prints "Label · pct% (↻ time)", or nothing when the window is absent or already expired.
+# Without resets_at, only the "(↻ ...)" part is dropped.
 buildLimitPart() {
   local label=$1 color=$2 objectName=$3 json=$4
   local pct resetsAt remaining text
@@ -204,7 +204,7 @@ buildLimitPart() {
   if [ -n "$resetsAt" ]; then
     remaining=$((${resetsAt%%.*} - $(date +%s)))
     [ "$remaining" -gt 0 ] || return 0
-    text+=" $(paint "$COLOR_LIMIT_RESET" "(resets $(formatCountdown "$remaining"))")"
+    text+=" $(paint "$COLOR_LIMIT_RESET" "(↻ $(formatCountdown "$remaining"))")"
   fi
 
   printf '%s' "$text"
